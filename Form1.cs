@@ -14,6 +14,7 @@ namespace Space_Shooter
     {
         PictureBox[] stars;
         int backgroundspeed;
+        int playerspeed;
         Random rnd;
 
         public Form1()
@@ -21,9 +22,11 @@ namespace Space_Shooter
             InitializeComponent();
         }
 
+        /*       BackGround Animation           */
         private void Form1_Load(object sender, EventArgs e)
         {
             backgroundspeed = 4;
+            playerspeed = 4;
             stars = new PictureBox[15];
             rnd = new Random();
 
@@ -69,6 +72,67 @@ namespace Space_Shooter
                     stars[i].Top = -stars[i].Height;
                 }
             }
+        }
+        /*////////////////////////////////////////////////////////////////*/
+
+        private void LeftMoveTimer_Tick(object sender, EventArgs e)
+        {
+            if (Player.Left > 10)
+            {
+                Player.Left -= playerspeed;
+            }
+        }
+
+        private void RightMoveTimer_Tick(object sender, EventArgs e)
+        {
+            if (Player.Right < 580)
+            {
+                Player.Left += playerspeed;
+            }
+        }
+
+        private void UpMoveTimer_Tick(object sender, EventArgs e)
+        {
+            if (Player.Top > 10)
+            {
+                Player.Top -= playerspeed;
+            }
+        }
+
+        private void DownMoveTimer_Tick(object sender, EventArgs e)
+        {
+            if (Player.Top < 400)
+            {
+                Player.Top += playerspeed;
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                RightMoveTimer.Start();
+            }
+            if(e.KeyCode == Keys.Left || e.KeyCode == Keys.Q)
+            {
+                LeftMoveTimer.Start();
+            }
+            if(e.KeyCode == Keys.Up || e.KeyCode == Keys.Z)
+            {
+                UpMoveTimer.Start();
+            }
+            if(e.KeyCode == Keys.Down || e.KeyCode == Keys.S) 
+            {
+                DownMoveTimer.Start(); 
+            }
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+         RightMoveTimer.Stop();
+         LeftMoveTimer.Stop();
+         UpMoveTimer.Stop();
+         DownMoveTimer.Stop();
         }
     }
 }
