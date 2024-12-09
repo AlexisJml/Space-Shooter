@@ -16,20 +16,39 @@ namespace Space_Shooter
         int backgroundspeed;
         int playerspeed;
         Random rnd;
+        PictureBox[] bullets;
+        int bulletspeed;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        /*       BackGround Animation           */
+        
         private void Form1_Load(object sender, EventArgs e)
         {
+            //init background animation
             backgroundspeed = 4;
             playerspeed = 4;
             stars = new PictureBox[15];
             rnd = new Random();
 
+            //init bullet
+            bullets = new PictureBox[3];
+            bulletspeed = 20;
+            Image bullet = Image.FromFile(@"assets\bullet.png");
+
+            for(int i = 0; i < bullets.Length; i++)
+            {
+                bullets[i] = new PictureBox();
+                bullets[i].Size = new Size(50, 75);
+                bullets[i].Image = bullet;
+                bullets[i].SizeMode = PictureBoxSizeMode.Zoom;
+                bullets[i].BorderStyle = BorderStyle.None;
+                this.Controls.Add(bullets[i]);
+            }
+
+            /*       BackGround Animation           */
             for (int i = 0; i < stars.Length; i++)
             {
                 stars[i] = new PictureBox();
@@ -75,6 +94,7 @@ namespace Space_Shooter
         }
         /*////////////////////////////////////////////////////////////////*/
 
+        /*                  Player Movements                                   */
         private void LeftMoveTimer_Tick(object sender, EventArgs e)
         {
             if (Player.Left > 10)
@@ -109,19 +129,19 @@ namespace Space_Shooter
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            if (e.KeyCode == Keys.D)
             {
                 RightMoveTimer.Start();
             }
-            if(e.KeyCode == Keys.Left || e.KeyCode == Keys.Q)
+            if(e.KeyCode == Keys.Q)
             {
                 LeftMoveTimer.Start();
             }
-            if(e.KeyCode == Keys.Up || e.KeyCode == Keys.Z)
+            if(e.KeyCode == Keys.Z)
             {
                 UpMoveTimer.Start();
             }
-            if(e.KeyCode == Keys.Down || e.KeyCode == Keys.S) 
+            if(e.KeyCode == Keys.S) 
             {
                 DownMoveTimer.Start(); 
             }
@@ -133,6 +153,24 @@ namespace Space_Shooter
          LeftMoveTimer.Stop();
          UpMoveTimer.Stop();
          DownMoveTimer.Stop();
+        }
+        /*////////////////////////////////////////////////////////////////*/
+
+        private void BulletTimer_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < bullets.Length; i++)
+            {
+                if (bullets[i].Top > 0)
+                {
+                    bullets[i].Visible = true;
+                    bullets[i].Top -= bulletspeed;
+                }
+                else
+                {
+                    bullets[i].Visible = false;
+                    bullets[i].Location = new Point(Player.Location.X +20, Player.Location.Y - i * 30);
+                }
+            }
         }
     }
 }

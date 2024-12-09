@@ -35,6 +35,7 @@
             this.RightMoveTimer = new System.Windows.Forms.Timer(this.components);
             this.UpMoveTimer = new System.Windows.Forms.Timer(this.components);
             this.DownMoveTimer = new System.Windows.Forms.Timer(this.components);
+            this.BulletTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,6 +76,12 @@
             this.DownMoveTimer.Interval = 5;
             this.DownMoveTimer.Tick += new System.EventHandler(this.DownMoveTimer_Tick);
             // 
+            // BulletTimer
+            // 
+            this.BulletTimer.Enabled = true;
+            this.BulletTimer.Interval = 50;
+            this.BulletTimer.Tick += new System.EventHandler(this.BulletTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,6 +109,7 @@
         private System.Windows.Forms.Timer RightMoveTimer;
         private System.Windows.Forms.Timer UpMoveTimer;
         private System.Windows.Forms.Timer DownMoveTimer;
+        private System.Windows.Forms.Timer BulletTimer;
     }
 }
 
