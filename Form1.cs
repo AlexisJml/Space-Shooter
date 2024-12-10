@@ -18,6 +18,9 @@ namespace Space_Shooter
         Random rnd;
         PictureBox[] bullets;
         int bulletspeed;
+        PictureBox[] enemies;
+        int enemyspeed;
+        Random rndImage;
 
         public Form1()
         {
@@ -38,7 +41,31 @@ namespace Space_Shooter
             bulletspeed = 20;
             Image bullet = Image.FromFile(@"assets\bullet.png");
 
-            for(int i = 0; i < bullets.Length; i++)
+            //init enemy images
+            enemyspeed = 4;
+            Image[] enemyImages = new Image[]
+            {
+                Image.FromFile(@"assets\enemy1.png"),
+                Image.FromFile(@"assets\enemy2.png")
+            };
+            rndImage = new Random();
+            enemies = new PictureBox[10];
+
+            for(int i=0; i < enemies.Length; i++)
+            {
+                enemies[i] = new PictureBox();
+                enemies[i].Size = new Size(40, 40);
+                enemies[i].SizeMode = PictureBoxSizeMode.Zoom;
+                enemies[i].BorderStyle = BorderStyle.None;
+                enemies[i].Visible = false;
+                enemies[i].Location = new Point((i+1) * 50, -50);
+                this.Controls.Add(enemies[i]);
+
+                int index = rndImage.Next(enemyImages.Length);
+                enemies[i].Image = enemyImages[index];
+            }
+
+            for (int i = 0; i < bullets.Length; i++)
             {
                 bullets[i] = new PictureBox();
                 bullets[i].Size = new Size(50, 75);
@@ -156,6 +183,7 @@ namespace Space_Shooter
         }
         /*////////////////////////////////////////////////////////////////*/
 
+        /*                  Player Shoot                                   */
         private void BulletTimer_Tick(object sender, EventArgs e)
         {
             for (int i = 0; i < bullets.Length; i++)
@@ -172,5 +200,28 @@ namespace Space_Shooter
                 }
             }
         }
+        /*////////////////////////////////////////////////////////////////*/
+
+
+        /*                  Enemies Movements                             */
+        private void MoveEnemiesTimer_Tick(object sender, EventArgs e)
+        {
+            MoveEnemies(enemies, enemyspeed);
+        }
+
+        private void MoveEnemies(PictureBox[] enemies, int speed)
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i].Visible = true;
+                enemies[i].Top += speed;
+
+                if (enemies[i].Top > this.Height)
+                {
+                    enemies[i].Location = new Point((i + 1) * 50, -200);
+                }
+            }
+        }
+        /*////////////////////////////////////////////////////////////////*/
     }
 }
