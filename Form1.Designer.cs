@@ -37,6 +37,7 @@
             this.DownMoveTimer = new System.Windows.Forms.Timer(this.components);
             this.BulletTimer = new System.Windows.Forms.Timer(this.components);
             this.MoveEnemiesTimer = new System.Windows.Forms.Timer(this.components);
+            this.MoveBigTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.Player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,6 +118,7 @@
         private System.Windows.Forms.Timer DownMoveTimer;
         private System.Windows.Forms.Timer BulletTimer;
         private System.Windows.Forms.Timer MoveEnemiesTimer;
+        private System.Windows.Forms.Timer MoveBigTimer;
     }
 }
 

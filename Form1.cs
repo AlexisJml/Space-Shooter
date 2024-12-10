@@ -192,6 +192,8 @@ namespace Space_Shooter
                 {
                     bullets[i].Visible = true;
                     bullets[i].Top -= bulletspeed;
+
+                    Collision();
                 }
                 else
                 {
@@ -219,6 +221,22 @@ namespace Space_Shooter
                 if (enemies[i].Top > this.Height)
                 {
                     enemies[i].Location = new Point((i + 1) * 50, -200);
+                }
+            }
+        }
+
+        private void Collision()
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (bullets[0].Bounds.IntersectsWith(enemies[i].Bounds) || bullets[1].Bounds.IntersectsWith(enemies[i].Bounds) || bullets[2].Bounds.IntersectsWith(enemies[i].Bounds))
+                {
+                    enemies[i].Location = new Point((i + 1) * 50, -100);
+                }
+
+                if (Player.Bounds.IntersectsWith(enemies[i].Bounds))
+                {
+                    Player.Visible = false;
                 }
             }
         }
